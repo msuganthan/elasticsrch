@@ -18,4 +18,4 @@ Batch Processing:
 
 	Loading sample dataSet
 
-	curl -XPOST 'localhost:9200/bank/account/_bulk?pretty' --data-binary 'path to json'
+	curl -XPOST 'localhost:9200/bank/account/_bulk?pretty' --data-binary '@path to json'

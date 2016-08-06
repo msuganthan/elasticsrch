@@ -1,0 +1,40 @@
+Search API
+===========
+
+	curl 'localhost:9200/bank/_search?q=Virginia&pretty'
+
+	curl -XPOST 'localhost:9200/bank/_search?pretty' -d '
+	{
+	  "query": { "match_all": {} }
+	}'
+
+	curl -XPOST 'localhost:9200/bank/_search?pretty' -d '
+	{
+	  "query": { "match_all": {} },
+	  "size": 1
+	}'
+
+	curl -XPOST 'localhost:9200/bank/_search?pretty' -d '
+	{
+	  "query": { "match_all": {} },
+	  "from": 10,
+	  "size": 10
+	}'
+
+	curl -XPOST 'localhost:9200/bank/_search?pretty' -d '
+	{
+	  "query": { "match_all": {} },
+	  "sort": { "balance": { "order": "desc" } }
+	}'
+
+
+	curl -XPOST 'localhost:9200/bank/_search?pretty' -d '
+	{
+	  "query": { "match_all": {} },
+	  "_source": ["account_number", "balance"]
+	}'
+
+	curl -XPOST 'localhost:9200/bank/_search?pretty' -d '
+	{
+	  "query": { "match": { "account_number": 20 } }
+	}'
