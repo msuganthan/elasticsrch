@@ -1,0 +1,29 @@
+Cluster Health:
+===============
+
+	To check how our cluster is doing.
+
+	curl localhost:9200/_cat/health?v
+
+	epoch      timestamp cluster       status node.total node.data shards pri relo init unassign pending_tasks max_task_wait_time active_shards_percent 
+	1470499168 21:29:28  elasticsearch yellow          1         1      5   5    0    0        5             0                  -                 5
+
+	green -- is everything is good
+	yellow -- all data is available but some replicas are not yet allocated
+	red -- some data is not available for whatever reason.
+
+	List of nodes in our cluster
+	=============================
+
+	curl 'localhost:9200/_cat/nodes?v'
+
+	host      ip        heap.percent ram.percent load node.role master name   
+127.0.0.1 127.0.0.1            2          99 0.62 d         *      Tyrant 
+
+	List all indicies:
+	==================
+
+	curl 'localhost:9200/_cat/indices?v'
+
+
+
