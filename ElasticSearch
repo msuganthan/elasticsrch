@@ -1,0 +1,42 @@
+ElasticSearch:
+==============
+
+	Is a highly scalable open-source full-text search and anlaytics engine. It allows you to 
+		store, 
+		search, and 
+		analyze big volumes of data 
+	quickly and in near real time.
+
+	Near RealTime:
+	==============
+	
+		This means is there is a slight latency from the time you index a document until the time it becomes searable.
+
+	Cluster:
+	========
+		
+		Is a collection of one or more nodes that together holds your entire data and provides federated indexing and searchable capabilities accross all nodes.
+	
+	Node:
+	=====
+
+		A node is a single server that is part of your cluster, stores your data, and participates in the cluster’s indexing and search capabilities.
+
+	Index:
+	======
+
+		Is a collection of documents that have somewhat similiar characteristics. For example, you can have an index for 
+		-- customer data, 
+		-- product catalog
+		-- order data
+
+	Type:
+	=====
+
+		Within an index, you can define one or more types. A type is a logical category/partition of your index.
+
+	Document:
+	=========
+
+		Is a basic unti of information that can be indexed.
+		
