@@ -25,5 +25,42 @@ Cluster Health:
 
 	curl 'localhost:9200/_cat/indices?v'
 
+	Create an Index:
+	================
 
+	curl -XPUT 'localhost:9200/customer?pretty'
 
+	Index and Query Document:
+	=========================
+
+	curl -XPUT 'localhost:9200/customer/external/1?pretty' -d '
+	{
+	  "name": "John Doe"
+	}'
+
+	Query it:
+	=========
+
+	curl -XGET 'localhost:9200/customer/external/1?pretty'
+
+	Delete an index:
+	================
+
+	curl -XDELETE 'localhost:9200/customer?pretty'
+
+	Syntax:
+	=======
+	curl -X<REST Verb> <Node>:<Port>/<Index>/<Type>/<ID>
+
+	Modify Your data:
+	=================
+
+	curl -XPUT 'localhost:9200/customer/external/1?pretty' -d '
+	{
+	  "name": "John Doe"
+	}'
+
+	curl -XPOST 'localhost:9200/customer/external/1/_update?pretty' -d '
+	{
+	  "doc": { "name": "Jane Doe" }
+	}'
