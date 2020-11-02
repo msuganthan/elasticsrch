@@ -1,0 +1,36 @@
+curl -XPUT 127.0.0.1:9200/movies -d '
+{
+        "mappings": {
+                "movie":{
+                        "_all": {"enabled":false},
+                        "properties": {
+                                "id": {"type": "integer"},
+                                "year": {"type":"date"},
+                                "genre":{"type":"string", "index": "not_analyzed"},
+                                "title":{"type":"string", "analyzer":"english"}
+                        }
+                }
+        }
+}'
+
+
+curl -XPUT 127.0.0.1:9200/_bulk?pretty --data-binary @movies.json
+
+curl -XGET 127.0.0.1:9200/movies/movie/_search?pretty -d '
+{
+"query": {
+        "match": {
+                "genre":"Sci-Fi"
+                }
+        }
+}'
+
+curl -XGET 127.0.0.1:9200/movies/movie/_search?pretty -d '
+{
+"query": {
+        "match": {
+                "title":"Star Wars"
+                }
+        }
+}
+
