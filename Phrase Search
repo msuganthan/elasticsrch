@@ -1,0 +1,24 @@
+match_phrase: must find all terms, in the right order
+
+
+curl -XGET 127.0.0.1:9200/movies/movie/_search?pretty -d '
+{
+	"query": {
+		"match_phrase": {
+			"title": "Star Wars"
+		}
+	}
+}'
+
+
+curl -XGET 127.0.0.1:9200/movies/movie/_search?pretty -d '
+{
+	"query": {
+		"match_phrase": {
+			"title": {"query": "star beyond", "slop": 1}
+		}
+	}
+}'
+
+
+the slop represents how far you're willing to let a term move to satisfy a phrase
