@@ -1,0 +1,18 @@
+curl -XGET 127.0.01:9200/movies/_search?pretty -d ' 
+{
+	"query": {
+		"match": {
+			"title": "Intersteller"
+		}
+	}
+}'
+
+
+curl -XGET 127.0.01:9200/movies/movie/_search?pretty -d ' 
+{
+        "query": {
+                "fuzzy": {
+                        "title": {"value": "Intersteller", "fuzziness": 2} 
+                }
+        }
+}'
