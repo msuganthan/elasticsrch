@@ -1,0 +1,30 @@
+curl -XPUT 127.0.0.1:9200/movies/ -d'
+{
+	"mappings": {
+		"movie": {
+			"_all": {"enabled": false},
+			"properties": {
+				"year": {
+					"type": "string",
+					"index": "not_analyzed"
+				}
+			}
+		}
+	}
+}'
+
+curl -XPUT 127.0.0.1:9200/_bulk --data-binary @movies.json
+
+curl -XGET 127.0.0.1:9200/movies/movie/_search?pretty -d '
+{
+	"query": {
+		"prefix": {"year": "201"}
+	}
+}'
+
+curl -XGET 127.0.0.1:9200/movies/movie/_search?pretty -d '
+{
+	"query": {
+		"wildcard": {"year": "1*"}
+	}
+}'
