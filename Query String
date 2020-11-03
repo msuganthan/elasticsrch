@@ -1,0 +1,84 @@
+curl -XGET "127.0.0.1:9200/movies/movie/_search?q=title:star&pretty"
+
+Won't work like expected because it is not url encoded:
+=======================================================
+curl -XGET "127.0.0.1:9200/movies/movie/_search?q=+year:>2000+title:star&pretty"
+
+
+curl -XGET 127.0.0.1:9200/movies/movie/_search?pretty -d ' 
+{
+	"query": {
+		"match": {
+			"title": "Star"
+		}
+	}
+}'
+
+curl -XGET 127.0.0.1:9200/movies/movie/_search?pretty -d ' 
+{
+	"query": {
+		"bool": {
+			"must": {"term": {"title": "trek"}}
+			"filter": {"range": {"year": {"gte":2010}}}
+		}
+	}
+}'
+
+Filters:
+========
+
+term: filter by exact values
+	
+	{"term": {"year": 2014}}
+
+terms: match if any exact values in a list match
+
+	{"terms": {"genre": ["Sci-Fi", "Adventure"]}} 
+
+range: Find numbers or dates in a given range(gt, gte, lt, lte)
+
+	{"range": {"year": {"gte": 2010}}}
+
+exists: Find documents where a field exists
+
+	{"exists": {"field": "tags"}}
+
+missing: Find documents where a field is missing
+
+	{"missing": {"field": "tags"}}
+
+bool: Combile filters with boolean logic(must, must_not, should)
+
+Queries:
+========
+
+match_all: returns all documents and is the default. Normally used with a filter.
+
+	{"match_all": {}}
+
+	curl -XGET 127.0.0.1:9200/movies/movie/_search?pretty -d ' 
+	{
+		"query": {"match_all": {}}
+	}'
+
+match: searches analyzed results, such as full text search
+	
+	{"match": {"title": "star"}}
+
+	curl -XGET 127.0.0.1:9200/movies/movie/_search?pretty -d ' 
+	{
+		"query": {"match": {"title": "star"}}
+	}'
+
+multi_match: run the same query on multiple fields
+
+	{multi_match: {"query": "star", "fields": ["title", "synopsis"]}}
+
+	curl -XGET 127.0.0.1:9200/movies/movie/_search?pretty -d ' 
+	{
+		"query": {"multi_match": {"query": "star", "fields": ["title", "synopsis"]}}
+	}'
+
+bool: Works like a bool filter, but results are scored by relevance.
+
+	
