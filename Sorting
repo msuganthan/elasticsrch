@@ -1,0 +1,26 @@
+We can't sort the analyzed field, so lets set the title as not_analyzed
+
+curl -XPUT 127.0.0.1:9200/movies/ -d ' 
+{
+"mappings": {
+		"movie": {
+			"_all": {"enabled": false},
+			"properties":{
+				"title": {
+					"type": "string",
+					"fields": {
+						"raw":{
+							"type": "string",
+							"index":"not_analyzed"
+						}
+					}
+				}
+			}
+		}
+	}
+}'
+
+
+curl -XPUT 127.0.0.1:9200/_bulk --data-binary @movies.json
+
+curl -XGET '127.0.0.1:9200/movies/movie/_search?sort=title.raw&pretty'
