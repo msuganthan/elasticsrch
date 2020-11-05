@@ -1,0 +1,20 @@
+sudo bin/logstash -f /etc/logstash/conf.d/logstash.conf
+
+input { 
+	jdbc {
+		jdbc_connection_string => "jdbc:mysql://localhost:3306/movielens"
+		jdbc_user => "root"
+		jdbc_password => "password"
+		jdbc_driver_library => "/home/msuganthan/Downloads/mysql-connector-java-5.1.49/mysql-connector-java-5.1.49-bin.jar"
+		jdbc_driver_class => "com.mysql.jdbc.Driver"
+		statement => "SELECT * FROM movies"
+	}
+}
+output {
+	stdout {codec => json_lines}
+	elasticsearch {
+		"hosts" => "localhost:9200"
+		"index" => "movielens-sql"
+		"document_type" => "data"
+	}
+}
