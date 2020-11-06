@@ -1,0 +1,25 @@
+curl -XGET '127.0.0.1:9200/ratings/rating/_search?size=0&pretty' -d '
+{
+	"aggs": {
+		"whole_rating": {
+			"histogram": {
+				"field": "rating",
+				"interval": 1.0
+			}
+		}
+	}
+}'
+
+
+curl -XGET '127.0.0.1:9200/movies/movie/_search?size=0&pretty' -d '
+{
+	"aggs": {
+		"release": {
+			"histogram": {
+				"field": "year",
+				"interval": 10
+			}
+		}
+	}
+}'
+
