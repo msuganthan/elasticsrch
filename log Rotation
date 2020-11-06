@@ -1,0 +1,12 @@
+POST /_aliases 
+{
+	"actions": [
+		{"add": {"alias": "logs_current", "index": "logs_2017_06"}},
+		{"remove": {"alias": "logs_current", "index": "logs_2017_05"}},
+		{"add": {"alias": "logs_last_3_months", "index": "logs_2017_06"}},
+		{"remove": {"alias": "logs_last_3_months", "index": "logs_2017_03"}}
+	]
+}
+
+optionally...
+DELETE /logs_2017_03
