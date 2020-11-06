@@ -1,0 +1,46 @@
+Problematic:
+============
+
+curl -XGET '127.0.0.1:9200/ratings/rating/_search?size=0&pretty' -d '
+{
+	"query": {
+		"match_phrase": {"title": "Star Wars"}
+	},
+	"aggs": {
+		"titles": {
+			"terms": {"field": "title.raw"},
+			"aggs": {
+				"avg_rating": {
+					"avg": {"field": "rating"}
+				}
+			}
+		}
+	}
+}'
+
+
+curl -XDELETE '127.0.0.1:9200/ratings'
+
+Run IndexRating.py
+
+curl -XPUT '127.0.0.1:9200/ratings/' -d '
+{
+	"mappings": {
+		"rating": {
+			"_all": {"enabled": false},
+			"properties": {
+				"title": {
+					"type": "string",
+					"fielddata": true,
+					"fields": {
+						"raw": {
+							"type": "string",
+							"index": "not_analyzed"
+						}
+					}
+				}
+			}
+
+		}
+	}
+}'
